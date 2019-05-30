@@ -1,1 +1,1 @@
-# bitcoin_coding_challenge
+# BitcoinCodingChallenge
