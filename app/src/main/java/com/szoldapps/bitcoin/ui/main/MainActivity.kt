@@ -3,12 +3,16 @@ package com.szoldapps.bitcoin.ui.main
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import com.google.android.material.snackbar.Snackbar
+import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.data.LineData
 import com.szoldapps.bitcoin.R
 import dagger.android.AndroidInjection
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main.toolbar
+import kotlinx.android.synthetic.main.content_main.chart
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
@@ -26,12 +30,25 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
-        mainViewModel.loadData()
+        mainViewModel.state.observe(this, Observer { mainState ->
+            when (mainState) {
+                MainActivityState.SHOW_CHART -> chart.visibility = View.VISIBLE
+                else -> chart.visibility = View.GONE
+            }
 
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
-        }
+        })
+        mainViewModel.lineDataSet.observe(this, Observer { lineDataSet ->
+            chart.apply {
+                axisRight.isEnabled = false
+                xAxis.apply {
+                    valueFormatter = XAxisFormatter()
+                    position = XAxis.XAxisPosition.BOTTOM
+                }
+                legend.isEnabled = false
+                data = LineData(lineDataSet)
+            }.invalidate()
+        })
+        mainViewModel.loadData()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
