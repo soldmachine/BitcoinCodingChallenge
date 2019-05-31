@@ -2,9 +2,8 @@ package com.szoldapps.bitcoin.ui.main
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.github.mikephil.charting.data.Entry
-import com.github.mikephil.charting.data.LineDataSet
 import com.szoldapps.bitcoin.repository.BlockchainRepository
+import com.szoldapps.bitcoin.repository.model.MarketPriceData
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
@@ -17,23 +16,24 @@ class MainViewModel(
 ) : ViewModel() {
 
     val state = MutableLiveData<MainActivityState>()
-    val lineDataSet = MutableLiveData<LineDataSet>()
+    val marketPriceData = MutableLiveData<MarketPriceData>()
     private val disposables = CompositeDisposable()
 
-    fun loadData() {
+    /**
+     * Loads market price data and updates [state] accordingly
+     */
+    fun loadMarketPriceData() {
         state.postValue(MainActivityState.LOADING)
         blockchainRepository.getMarketPriceData()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeBy(
-                onSuccess = { blockchainData ->
-                    val entries = blockchainData.values?.map { value -> Entry(value.x.toFloat(), value.y.toFloat()) }
-                    lineDataSet.postValue(LineDataSet(entries, "Label"))
+                onSuccess = { marketPriceDataTemp ->
+                    marketPriceData.postValue(marketPriceDataTemp)
                     state.postValue(MainActivityState.SHOW_CHART)
-                    Timber.i("got something\n: $blockchainData")
                 },
                 onError = { throwable ->
-                    Timber.e(throwable, "Failed to get market price data")
+                    Timber.e(throwable, "Failed to retrieve the market price data")
                     state.postValue(MainActivityState.ERROR)
                 }
             )

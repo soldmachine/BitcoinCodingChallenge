@@ -9,6 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.LineData
+import com.github.mikephil.charting.data.LineDataSet
 import com.szoldapps.bitcoin.R
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_main.toolbar
@@ -37,7 +38,7 @@ class MainActivity : AppCompatActivity() {
             }
 
         })
-        mainViewModel.lineDataSet.observe(this, Observer { lineDataSet ->
+        mainViewModel.marketPriceData.observe(this, Observer { marketPriceData ->
             chart.apply {
                 axisRight.isEnabled = false
                 xAxis.apply {
@@ -45,10 +46,10 @@ class MainActivity : AppCompatActivity() {
                     position = XAxis.XAxisPosition.BOTTOM
                 }
                 legend.isEnabled = false
-                data = LineData(lineDataSet)
+                data = LineData(LineDataSet(marketPriceData.entries, "Label"))
             }.invalidate()
         })
-        mainViewModel.loadData()
+        mainViewModel.loadMarketPriceData()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

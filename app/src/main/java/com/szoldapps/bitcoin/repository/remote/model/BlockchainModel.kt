@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 /**
  * Represents a blockchain data response container
  */
-data class BlockchainData(
+data class BlockchainDto(
 
     @SerializedName("status")
     val status: String?,
@@ -23,14 +23,14 @@ data class BlockchainData(
     val description: String?,
 
     @SerializedName("values")
-    val values: List<Value>?
+    val valueDtos: List<ValueDto>?
 
 )
 
 /**
- * Model of a pair of values
+ * Model of a pair of valueDtos
  */
-data class Value(
+data class ValueDto(
 
     @SerializedName("x")
     val x: Int,
