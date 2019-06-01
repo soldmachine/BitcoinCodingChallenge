@@ -46,10 +46,14 @@ class MainActivity : AppCompatActivity() {
             description = null
             legend.isEnabled = false
             axisRight.isEnabled = false
-            axisLeft.valueFormatter = YAxisFormatter()
+            val lightGray = ContextCompat.getColor(context, R.color.lightGray)
+            axisLeft.apply {
+                gridColor = lightGray
+                valueFormatter = YAxisFormatter()
+            }
             xAxis.apply {
-                setDrawGridLines(false)
-                valueFormatter = XAxisFormatter()
+                gridColor = lightGray
+                valueFormatter = XAxisFormatter(viewPortHandler)
                 position = XAxis.XAxisPosition.BOTTOM
             }
             val lineDataSet = LineDataSet(marketPriceData.entries, null).apply {
