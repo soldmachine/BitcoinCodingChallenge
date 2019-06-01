@@ -7,6 +7,7 @@ import com.nhaarman.mockitokotlin2.inOrder
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.verifyNoMoreInteractions
+import com.nhaarman.mockitokotlin2.willReturn
 import com.szoldapps.bitcoin.repository.BlockchainRepository
 import com.szoldapps.bitcoin.repository.model.MarketPriceData
 import com.szoldapps.bitcoin.util.RxSchedulerTestRule
@@ -40,7 +41,7 @@ class MainViewModelTest {
         val observer = mock<Observer<MainActivityState>>()
         mainViewModel.state.observeForever(observer)
 
-        given { blockchainRepository.getMarketPriceData() }.willReturn(Single.just(MarketPriceData()))
+        given { blockchainRepository.getMarketPriceData() }.willReturn { Single.just(MarketPriceData()) }
 
         // when
         mainViewModel.loadMarketPriceData()
@@ -59,7 +60,7 @@ class MainViewModelTest {
         val observer = mock<Observer<MainActivityState>>()
         mainViewModel.state.observeForever(observer)
 
-        given { blockchainRepository.getMarketPriceData() }.willReturn(Single.error(Exception()))
+        given { blockchainRepository.getMarketPriceData() }.willReturn { Single.error(Exception()) }
 
         // when
         mainViewModel.loadMarketPriceData()
@@ -79,7 +80,7 @@ class MainViewModelTest {
         mainViewModel.marketPriceData.observeForever(observer)
 
         val marketPriceData = MarketPriceData("name", "description")
-        given { blockchainRepository.getMarketPriceData() }.willReturn(Single.just(marketPriceData))
+        given { blockchainRepository.getMarketPriceData() }.willReturn { Single.just(marketPriceData) }
 
         // when
         mainViewModel.loadMarketPriceData()
