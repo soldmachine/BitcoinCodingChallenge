@@ -13,6 +13,7 @@ import com.szoldapps.bitcoin.R
 import com.szoldapps.bitcoin.databinding.ActivityMainBinding
 import com.szoldapps.bitcoin.ui.main.chart.CustomMarkerView
 import com.szoldapps.bitcoin.ui.main.chart.XAxisFormatter
+import com.szoldapps.bitcoin.ui.main.chart.YAxisFormatter
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_main.chart
 import javax.inject.Inject
@@ -36,24 +37,23 @@ class MainActivity : AppCompatActivity() {
         mainViewModel.marketPriceData.observe(this, Observer { marketPriceData ->
             chart.apply {
                 description = null
+                legend.isEnabled = false
                 axisRight.isEnabled = false
+                axisLeft.valueFormatter = YAxisFormatter()
                 xAxis.apply {
                     setDrawGridLines(false)
                     valueFormatter = XAxisFormatter()
                     position = XAxis.XAxisPosition.BOTTOM
                 }
-                legend.isEnabled = false
-                val lineDataSet = LineDataSet(marketPriceData.entries, "Label")
-                val colorPrimary = ContextCompat.getColor(context, R.color.colorPrimary)
-                lineDataSet.color = colorPrimary
-                lineDataSet.lineWidth = 3f
-                lineDataSet.setDrawCircles(false)
-                lineDataSet.setDrawValues(false)
-
-                setTouchEnabled(true)
-                val marker = CustomMarkerView(context, R.layout.view_marker)
-                setMarker(marker)
-                //lineDataSet.setCircleColors(colorPrimary)
+                val lineDataSet = LineDataSet(marketPriceData.entries, "Label").apply {
+                    color = ContextCompat.getColor(context, R.color.colorPrimary)
+                    lineWidth = 3f
+                    setDrawCircles(false)
+                    setDrawValues(false)
+                    // smooth out line
+                    mode = LineDataSet.Mode.CUBIC_BEZIER
+                }
+                marker = CustomMarkerView(context, R.layout.view_marker)
                 data = LineData(lineDataSet)
             }.invalidate()
         })
