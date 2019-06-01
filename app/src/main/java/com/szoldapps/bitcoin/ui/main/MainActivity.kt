@@ -11,6 +11,7 @@ import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.szoldapps.bitcoin.R
 import com.szoldapps.bitcoin.databinding.ActivityMainBinding
+import com.szoldapps.bitcoin.repository.model.MarketPriceData
 import com.szoldapps.bitcoin.ui.main.chart.CustomMarkerView
 import com.szoldapps.bitcoin.ui.main.chart.XAxisFormatter
 import com.szoldapps.bitcoin.ui.main.chart.YAxisFormatter
@@ -35,29 +36,33 @@ class MainActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
 
         mainViewModel.marketPriceData.observe(this, Observer { marketPriceData ->
-            chart.apply {
-                description = null
-                legend.isEnabled = false
-                axisRight.isEnabled = false
-                axisLeft.valueFormatter = YAxisFormatter()
-                xAxis.apply {
-                    setDrawGridLines(false)
-                    valueFormatter = XAxisFormatter()
-                    position = XAxis.XAxisPosition.BOTTOM
-                }
-                val lineDataSet = LineDataSet(marketPriceData.entries, "Label").apply {
-                    color = ContextCompat.getColor(context, R.color.colorPrimary)
-                    lineWidth = 3f
-                    setDrawCircles(false)
-                    setDrawValues(false)
-                    // smooth out line
-                    mode = LineDataSet.Mode.CUBIC_BEZIER
-                }
-                marker = CustomMarkerView(context, R.layout.view_marker)
-                data = LineData(lineDataSet)
-            }.invalidate()
+            formatAndUpdateChart(marketPriceData)
         })
         mainViewModel.loadMarketPriceData()
+    }
+
+    private fun formatAndUpdateChart(marketPriceData: MarketPriceData) {
+        chart.apply {
+            description = null
+            legend.isEnabled = false
+            axisRight.isEnabled = false
+            axisLeft.valueFormatter = YAxisFormatter()
+            xAxis.apply {
+                setDrawGridLines(false)
+                valueFormatter = XAxisFormatter()
+                position = XAxis.XAxisPosition.BOTTOM
+            }
+            val lineDataSet = LineDataSet(marketPriceData.entries, null).apply {
+                color = ContextCompat.getColor(context, R.color.colorPrimary)
+                lineWidth = 3f
+                setDrawCircles(false)
+                setDrawValues(false)
+                // smooth out line
+                mode = LineDataSet.Mode.CUBIC_BEZIER
+            }
+            marker = CustomMarkerView(context, R.layout.view_marker)
+            data = LineData(lineDataSet)
+        }.invalidate()
     }
 
 }
