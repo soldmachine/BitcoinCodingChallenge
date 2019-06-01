@@ -46,15 +46,13 @@ class BlockchainRepositoryTest {
             .assertValue(blockchainDto.mapToMarketPriceData())
     }
 
-    private fun getBlockchainDto(): BlockchainDto {
-        return BlockchainDto(
+    private fun getBlockchainDto(): BlockchainDto =
+        BlockchainDto(
             status = "status",
             name = "name",
             unit = "unit",
             period = "period",
             description = "description",
             valueDtos = emptyList()
-
         )
-    }
 }

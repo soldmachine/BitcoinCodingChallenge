@@ -75,6 +75,7 @@ dependencies {
 
     // Testing
     testImplementation "junit:junit:4.12"
+    testImplementation "org.jetbrains.kotlin:kotlin-test-junit:$kotlinVersion"
     testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.1.0"
     // needed for mocking (final classes)
     testImplementation "org.mockito:mockito-inline:2.21.0"
