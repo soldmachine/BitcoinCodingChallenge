@@ -25,4 +25,12 @@
         <item name="android:gravity">center</item>
     </style>
 
+    <style name="Marker" parent="TextAppearance.AppCompat.Small">
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <style name="Marker.Bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
 </resources>

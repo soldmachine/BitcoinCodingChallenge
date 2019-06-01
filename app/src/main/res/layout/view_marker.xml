@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="8dp"
+    android:background="@android:color/white"
+    android:padding="8dp">
+
+    <TextView
+        android:id="@+id/markerValueTv"
+        style="@style/Marker.Bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:lines="1"
+        tools:text="some value" />
+
+    <TextView
+        android:id="@+id/markerDateTv"
+        style="@style/Marker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/markerValueTv"
+        android:lines="1"
+        tools:text="some value" />
+
+</RelativeLayout>
