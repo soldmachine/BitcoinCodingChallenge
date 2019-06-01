@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         val binding: ActivityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-        binding.state = mainViewModel.state
+        binding.mainVm = mainViewModel
         binding.lifecycleOwner = this
 
         mainViewModel.marketPriceData.observe(this, Observer { marketPriceData ->
