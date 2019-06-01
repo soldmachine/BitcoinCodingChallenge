@@ -1,5 +1,6 @@
 package com.szoldapps.bitcoin.ui.main
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.szoldapps.bitcoin.repository.BlockchainRepository
@@ -15,26 +16,30 @@ class MainViewModel(
     private val blockchainRepository: BlockchainRepository
 ) : ViewModel() {
 
-    val state = MutableLiveData<MainActivityState>()
-    val marketPriceData = MutableLiveData<MarketPriceData>()
+    private val _state = MutableLiveData<MainActivityState>()
+    val state: LiveData<MainActivityState> = _state
+
+    private val _marketPriceData = MutableLiveData<MarketPriceData>()
+    val marketPriceData: LiveData<MarketPriceData> = _marketPriceData
+
     private val disposables = CompositeDisposable()
 
     /**
      * Loads market price data and updates [state] accordingly
      */
     fun loadMarketPriceData() {
-        state.postValue(MainActivityState.LOADING)
+        _state.postValue(MainActivityState.LOADING)
         blockchainRepository.getMarketPriceData()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeBy(
                 onSuccess = { marketPriceDataTemp ->
-                    marketPriceData.postValue(marketPriceDataTemp)
-                    state.postValue(MainActivityState.SHOW_CHART)
+                    _marketPriceData.postValue(marketPriceDataTemp)
+                    _state.postValue(MainActivityState.SHOW_CHART)
                 },
                 onError = { throwable ->
                     Timber.e(throwable, "Failed to retrieve the market price data")
-                    state.postValue(MainActivityState.ERROR)
+                    _state.postValue(MainActivityState.ERROR)
                 }
             )
             .addTo(disposables)
