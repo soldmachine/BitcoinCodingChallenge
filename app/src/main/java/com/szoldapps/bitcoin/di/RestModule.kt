@@ -35,11 +35,7 @@ open class RestModule {
 
     @Provides
     @Singleton
-    internal fun provideGson(): Gson {
-        return GsonBuilder()
-            .setDateFormat(DATE_FORMAT)
-            .create()
-    }
+    internal fun provideGson(): Gson = GsonBuilder().create()
 
     @Provides
     @Reusable
@@ -64,6 +60,5 @@ open class RestModule {
         private const val BASE_URL = "https://api.blockchain.info"
         private const val HTTP_CACHE_DIRECTORY_NAME = "HttpCache"
         private const val HTTP_CACHE_SIZE = 10 * 1024 * 1024L // 10 MiB
-        private const val DATE_FORMAT = "yyyy-MM-dd"
     }
 }
