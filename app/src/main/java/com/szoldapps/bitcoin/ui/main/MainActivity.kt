@@ -43,24 +43,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         mainViewModel.state.observe(this, Observer { state ->
-            when (state ?: return@Observer) {
-                MainActivityState.LOADING -> {
-                    loadingCl.visibility = View.VISIBLE
-                    showChartGroup.visibility = View.GONE
-                    errorCl.visibility = View.GONE
-                }
-                MainActivityState.SHOW_CHART -> {
-                    loadingCl.visibility = View.GONE
-                    showChartGroup.visibility = View.VISIBLE
-                    errorCl.visibility = View.GONE
-                }
-                MainActivityState.ERROR -> {
-                    loadingCl.visibility = View.GONE
-                    showChartGroup.visibility = View.GONE
-                    errorCl.visibility = View.VISIBLE
-                }
-            }
-
+            updateViewsAccordingToState(state)
         })
         mainViewModel.marketPriceData.observe(this, Observer { marketPriceData ->
             setNameAndDescription(marketPriceData)
@@ -76,6 +59,26 @@ class MainActivity : AppCompatActivity() {
         // Error handling
         errorBt.setOnClickListener {
             mainViewModel.loadMarketPriceData()
+        }
+    }
+
+    private fun updateViewsAccordingToState(state: MainActivityState?) {
+        when (state ?: return) {
+            MainActivityState.LOADING -> {
+                loadingCl.visibility = View.VISIBLE
+                showChartGroup.visibility = View.GONE
+                errorCl.visibility = View.GONE
+            }
+            MainActivityState.SHOW_CHART -> {
+                loadingCl.visibility = View.GONE
+                showChartGroup.visibility = View.VISIBLE
+                errorCl.visibility = View.GONE
+            }
+            MainActivityState.ERROR -> {
+                loadingCl.visibility = View.GONE
+                showChartGroup.visibility = View.GONE
+                errorCl.visibility = View.VISIBLE
+            }
         }
     }
 
