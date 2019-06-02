@@ -63,7 +63,7 @@
             tools:text="Average USD market price across major bitcoin exchanges." />
 
         <com.github.mikephil.charting.charts.LineChart
-            android:id="@+id/chart"
+            android:id="@+id/mainChart"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginStart="8dp"
@@ -80,7 +80,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="@{mainVm.state == MainActivityState.SHOW_CHART ? View.VISIBLE : View.GONE}"
-            app:constraint_referenced_ids="mainDescriptionTv,mainNameTv,chart" />
+            app:constraint_referenced_ids="mainDescriptionTv,mainNameTv,mainChart" />
+
+        <ImageView
+            android:id="@+id/mainRefreshIv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_refresh" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
