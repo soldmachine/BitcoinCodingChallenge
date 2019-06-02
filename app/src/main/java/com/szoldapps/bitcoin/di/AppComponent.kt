@@ -1,9 +1,7 @@
 package com.szoldapps.bitcoin.di
 
-import android.app.Application
 import android.content.Context
 import com.szoldapps.bitcoin.App
-import com.szoldapps.bitcoin.repository.BlockchainRepository
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjectionModule
@@ -24,24 +22,39 @@ import javax.inject.Singleton
 @Singleton
 interface AppComponent : AndroidInjector<App> {
 
-    fun inject(application: Application)
-
+    /**
+     * Builder interface to set available modules
+     */
     @Component.Builder
     interface Builder {
 
+        /**
+         * Binds [App] instance
+         */
         @BindsInstance
         fun app(application: App): Builder
 
+        /**
+         * Binds [Context] instance
+         */
         @BindsInstance
         fun context(context: Context): Builder
 
+        /**
+         * Binds [AppModule] instance
+         */
         @BindsInstance
         fun appModule(appModule: AppModule): Builder
 
+        /**
+         * Binds [RestModule] instance
+         */
         @BindsInstance
         fun restModule(restModule: RestModule): Builder
 
+        /**
+         * Builds [AppComponent]
+         */
         fun build(): AppComponent
     }
-
 }

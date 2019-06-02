@@ -18,5 +18,4 @@ class BlockchainRepository @Inject constructor(
      */
     fun getMarketPriceData(): Single<MarketPriceData> =
         blockchainApi.marketPrice().map { blockchainDto -> blockchainDto.mapToMarketPriceData() }
-
 }

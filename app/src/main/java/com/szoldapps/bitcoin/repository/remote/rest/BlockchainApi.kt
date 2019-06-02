@@ -4,6 +4,9 @@ import com.szoldapps.bitcoin.repository.remote.model.BlockchainDto
 import io.reactivex.Single
 import retrofit2.http.GET
 
+/**
+ * Retrofit API interface to access the blockchain APIs
+ */
 interface BlockchainApi {
 
     /**
@@ -11,5 +14,4 @@ interface BlockchainApi {
      */
     @GET("/charts/market-price")
     fun marketPrice(): Single<BlockchainDto>
-
 }

@@ -16,11 +16,14 @@ import com.szoldapps.bitcoin.ui.main.chart.CustomMarkerView
 import com.szoldapps.bitcoin.ui.main.chart.XAxisFormatter
 import com.szoldapps.bitcoin.ui.main.chart.YAxisFormatter
 import dagger.android.AndroidInjection
-import kotlinx.android.synthetic.main.activity_main.mainRefreshIv as refreshIv
 import kotlinx.android.synthetic.main.view_error.errorBt
 import javax.inject.Inject
 import kotlinx.android.synthetic.main.activity_main.mainChart as chart
+import kotlinx.android.synthetic.main.activity_main.mainRefreshIv as refreshIv
 
+/**
+ * Main activity that displays all content.
+ */
 class MainActivity : AppCompatActivity() {
 
     @Inject
@@ -53,6 +56,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    @SuppressWarnings("MagicNumber")
     private fun formatAndUpdateChart(marketPriceData: MarketPriceData) {
         chart.apply {
             description = null
@@ -80,5 +84,4 @@ class MainActivity : AppCompatActivity() {
             data = LineData(lineDataSet)
         }.invalidate()
     }
-
 }

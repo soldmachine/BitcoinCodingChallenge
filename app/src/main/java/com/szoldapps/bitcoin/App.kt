@@ -39,7 +39,6 @@ class App : Application(), HasActivityInjector {
             .inject(this)
     }
 
-
     /**
      *  A tree which logs important information for crash reporting.
      *  TODO: add actual crash reporting library

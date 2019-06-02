@@ -9,5 +9,4 @@ import com.github.mikephil.charting.formatter.ValueFormatter
 class YAxisFormatter : ValueFormatter() {
 
     override fun getAxisLabel(value: Float, axis: AxisBase?): String = "$$value"
-
 }

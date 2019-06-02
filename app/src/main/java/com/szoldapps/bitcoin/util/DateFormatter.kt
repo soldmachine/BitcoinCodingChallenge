@@ -11,14 +11,13 @@ const val DAY_MONTH_YEAR_DATE_FORMAT = "dd.MM"
 /**
  * Converts unix timestamp (in s) to formatted date (default = [MONTH_YEAR_DATE_FORMAT])
  */
+@SuppressWarnings("TooGenericExceptionCaught", "MagicNumber")
 fun Float.toFormattedDate(dateFormat: String): String {
     return try {
         SimpleDateFormat(dateFormat, Locale.getDefault()).format(Date(this.toLong() * 1000)) ?: this.toString()
-    } catch (e: Exception) {
-        when (e) {
-            is NullPointerException,
-            is IllegalArgumentException -> this.toString()
-            else -> throw e
-        }
+    } catch (e: NullPointerException) {
+        this.toString()
+    } catch (e: IllegalArgumentException) {
+        this.toString()
     }
 }

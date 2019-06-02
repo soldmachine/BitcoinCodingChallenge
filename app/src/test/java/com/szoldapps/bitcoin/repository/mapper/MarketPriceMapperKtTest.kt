@@ -21,7 +21,6 @@ class MarketPriceMapperKtTest {
 
         // then
         assertEquals(expectedMarketPriceData, actualMarketPriceData)
-
     }
 
     private fun getBlockchainDto(): BlockchainDto =
@@ -38,5 +37,4 @@ class MarketPriceMapperKtTest {
         private const val NAME = "name"
         private const val DESCRIPTION = "description"
     }
-
 }

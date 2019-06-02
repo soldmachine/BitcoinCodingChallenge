@@ -6,7 +6,4 @@ import dagger.Module
  * Module to provide
  */
 @Module
-open class AppModule {
-
-
-}
+open class AppModule

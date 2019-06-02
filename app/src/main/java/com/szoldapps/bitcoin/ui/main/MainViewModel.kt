@@ -12,6 +12,9 @@ import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 
+/**
+ * Main view model, used by [MainActivity]
+ */
 class MainViewModel(
     private val blockchainRepository: BlockchainRepository
 ) : ViewModel() {
@@ -49,5 +52,4 @@ class MainViewModel(
         super.onCleared()
         disposables.clear()
     }
-
 }

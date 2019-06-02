@@ -5,7 +5,9 @@ import androidx.lifecycle.ViewModelProvider
 import com.szoldapps.bitcoin.repository.BlockchainRepository
 import javax.inject.Inject
 
-
+/**
+ * ViewModelFactory for [MainViewModel]
+ */
 class MainViewModelFactory @Inject constructor(
     private val blockchainRepository: BlockchainRepository
 ) : ViewModelProvider.Factory {
@@ -17,5 +19,4 @@ class MainViewModelFactory @Inject constructor(
         }
         throw IllegalArgumentException("Unknown model class $modelClass")
     }
-
 }

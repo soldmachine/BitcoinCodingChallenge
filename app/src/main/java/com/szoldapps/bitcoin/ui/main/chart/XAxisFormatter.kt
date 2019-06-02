@@ -13,8 +13,12 @@ import com.szoldapps.bitcoin.util.toFormattedDate
 class XAxisFormatter(private val viewPortHandler: ViewPortHandler) : ValueFormatter() {
 
     override fun getAxisLabel(value: Float, axis: AxisBase?): String {
-        val dateFormat = if (viewPortHandler.scaleX > 3) DAY_MONTH_YEAR_DATE_FORMAT else MONTH_YEAR_DATE_FORMAT
+        val dateFormat =
+            if (viewPortHandler.scaleX > SCALE_THRESHOLD) DAY_MONTH_YEAR_DATE_FORMAT else MONTH_YEAR_DATE_FORMAT
         return value.toFormattedDate(dateFormat)
     }
 
+    companion object {
+        private const val SCALE_THRESHOLD = 3
+    }
 }

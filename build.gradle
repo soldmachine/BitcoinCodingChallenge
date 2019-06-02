@@ -15,11 +15,25 @@ buildscript {
     }
 }
 
+plugins {
+    id("io.gitlab.arturbosch.detekt").version("1.0.0-RC14")
+}
+
 allprojects {
     repositories {
         google()
         jcenter()
         maven { url 'https://jitpack.io' }
+    }
+}
+
+detekt {
+    input = files("${project.projectDir.absolutePath}")
+    config = files("${project.rootDir}/config/detekt/detekt-config.yml")
+    filters = ".*build.*,.*/resources/.*,.*/tmp/.*"
+
+    dependencies {
+        detektPlugins "io.gitlab.arturbosch.detekt:detekt-formatting:1.0.0-RC14"
     }
 }
 
