@@ -3,7 +3,6 @@ package com.szoldapps.bitcoin
 import android.app.Activity
 import android.app.Application
 import android.util.Log
-import com.szoldapps.bitcoin.di.AppModule
 import com.szoldapps.bitcoin.di.DaggerAppComponent
 import com.szoldapps.bitcoin.di.RestModule
 import dagger.android.DispatchingAndroidInjector
@@ -33,7 +32,6 @@ class App : Application(), HasActivityInjector {
         DaggerAppComponent.builder()
             .app(this)
             .context(this)
-            .appModule(AppModule())
             .restModule(RestModule())
             .build()
             .inject(this)

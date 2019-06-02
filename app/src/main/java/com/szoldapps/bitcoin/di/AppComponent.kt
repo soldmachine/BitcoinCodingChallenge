@@ -14,7 +14,6 @@ import javax.inject.Singleton
 @Component(
     modules = [
         AndroidInjectionModule::class,
-        AppModule::class,
         RestModule::class,
         ActivityModule::class
     ]
@@ -39,12 +38,6 @@ interface AppComponent : AndroidInjector<App> {
          */
         @BindsInstance
         fun context(context: Context): Builder
-
-        /**
-         * Binds [AppModule] instance
-         */
-        @BindsInstance
-        fun appModule(appModule: AppModule): Builder
 
         /**
          * Binds [RestModule] instance
