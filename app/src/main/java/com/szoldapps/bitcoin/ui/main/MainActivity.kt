@@ -1,22 +1,26 @@
 package com.szoldapps.bitcoin.ui.main
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.szoldapps.bitcoin.R
-import com.szoldapps.bitcoin.databinding.ActivityMainBinding
 import com.szoldapps.bitcoin.repository.model.MarketPriceData
 import com.szoldapps.bitcoin.ui.main.chart.CustomMarkerView
 import com.szoldapps.bitcoin.ui.main.chart.XAxisFormatter
 import com.szoldapps.bitcoin.ui.main.chart.YAxisFormatter
 import dagger.android.AndroidInjection
+import kotlinx.android.synthetic.main.activity_main.mainDescriptionTv
+import kotlinx.android.synthetic.main.activity_main.mainNameTv
+import kotlinx.android.synthetic.main.activity_main.showChartGroup
 import kotlinx.android.synthetic.main.view_error.errorBt
+import kotlinx.android.synthetic.main.view_error.errorCl
+import kotlinx.android.synthetic.main.view_loading.loadingCl
 import javax.inject.Inject
 import kotlinx.android.synthetic.main.activity_main.mainChart as chart
 import kotlinx.android.synthetic.main.activity_main.mainRefreshIv as refreshIv
@@ -36,11 +40,30 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
-        val binding: ActivityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-        binding.mainVm = mainViewModel
-        binding.lifecycleOwner = this
+        setContentView(R.layout.activity_main)
 
+        mainViewModel.state.observe(this, Observer { state ->
+            when (state ?: return@Observer) {
+                MainActivityState.LOADING -> {
+                    loadingCl.visibility = View.VISIBLE
+                    showChartGroup.visibility = View.GONE
+                    errorCl.visibility = View.GONE
+                }
+                MainActivityState.SHOW_CHART -> {
+                    loadingCl.visibility = View.GONE
+                    showChartGroup.visibility = View.VISIBLE
+                    errorCl.visibility = View.GONE
+                }
+                MainActivityState.ERROR -> {
+                    loadingCl.visibility = View.GONE
+                    showChartGroup.visibility = View.GONE
+                    errorCl.visibility = View.VISIBLE
+                }
+            }
+
+        })
         mainViewModel.marketPriceData.observe(this, Observer { marketPriceData ->
+            setNameAndDescription(marketPriceData)
             formatAndUpdateChart(marketPriceData)
         })
         mainViewModel.loadMarketPriceData()
@@ -54,6 +77,11 @@ class MainActivity : AppCompatActivity() {
         errorBt.setOnClickListener {
             mainViewModel.loadMarketPriceData()
         }
+    }
+
+    private fun setNameAndDescription(marketPriceData: MarketPriceData) {
+        mainNameTv.text = marketPriceData.name
+        mainDescriptionTv.text = marketPriceData.description
     }
 
     @SuppressWarnings("MagicNumber")
