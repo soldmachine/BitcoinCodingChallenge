@@ -3,4 +3,7 @@
     <string name="action_settings">Settings</string>
     <string name="loading">Loading</string>
     <string name="marker_template">USD: %1$s</string>
+    <string name="error_headline">Error</string>
+    <string name="error_description">Could not load the current market price data!</string>
+    <string name="error_retry_button">retry</string>
 </resources>

@@ -33,4 +33,10 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="Error.Headline" parent="Headline">
+        <item name="android:textColor">@color/error</item>
+    </style>
+
+    <style name="Error.Description" parent="TextAppearance.AppCompat.Body1" />
+
 </resources>

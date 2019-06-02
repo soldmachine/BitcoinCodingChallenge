@@ -17,6 +17,7 @@ import com.szoldapps.bitcoin.ui.main.chart.XAxisFormatter
 import com.szoldapps.bitcoin.ui.main.chart.YAxisFormatter
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_main.chart
+import kotlinx.android.synthetic.main.view_error.errorBt
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
@@ -39,6 +40,11 @@ class MainActivity : AppCompatActivity() {
             formatAndUpdateChart(marketPriceData)
         })
         mainViewModel.loadMarketPriceData()
+
+        // Error handling
+        errorBt.setOnClickListener {
+            mainViewModel.loadMarketPriceData()
+        }
     }
 
     private fun formatAndUpdateChart(marketPriceData: MarketPriceData) {
